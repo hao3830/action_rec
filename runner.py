@@ -80,7 +80,7 @@ def train():
   convert_to_txt = pd.read_csv(str(path) + '/out_txt/res.txt')
   convert_to_txt.to_csv (str(path) + '/Action/training/train_csv_file/' +'res.csv' , index=None)
 
-# create_video()
+create_video()
 train()
 
 
