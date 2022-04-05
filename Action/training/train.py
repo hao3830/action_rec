@@ -7,7 +7,7 @@ from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from tensorflow.keras.layers import BatchNormalization
-from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam,SGD
 from keras.models import load_model
 
 import matplotlib.pyplot as plt
@@ -147,7 +147,7 @@ model.add(Dense(units=18, activation='softmax'))  # units = nums of classes
 
 # training
 his = LossHistory()
-model.compile(loss='categorical_crossentropy', optimizer=Adam(0.0001), metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer=SGD(learning_rate=0.00001, momentum=0.9), metrics=['accuracy'])
 model.fit(X_train, Y_train, batch_size=32, epochs=20, verbose=1, validation_data=(X_test, Y_test), callbacks=[his])
 model.summary()
 his.loss_plot('epoch')
