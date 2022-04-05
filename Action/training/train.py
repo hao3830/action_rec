@@ -147,8 +147,8 @@ model.add(Dense(units=18, activation='softmax'))  # units = nums of classes
 
 # training
 his = LossHistory()
-model.compile(loss='categorical_crossentropy', optimizer=Adam(0.01), metrics=['accuracy'])
-model.fit(X_train, Y_train, batch_size=32, epochs=20, verbose=1, validation_data=(X_test, Y_test), callbacks=[his])
+model.compile(loss='categorical_crossentropy', optimizer=Adam(0.0001), metrics=['accuracy'])
+model.fit(X_train, Y_train, batch_size=32, epochs=1000, verbose=1, validation_data=(X_test, Y_test), callbacks=[his])
 model.summary()
 his.loss_plot('epoch')
 print(2)
