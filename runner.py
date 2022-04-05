@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import cv2
 from os.path import isfile,join
+from tqdm import tqdm
 path = os.path.abspath(os.getcwd())
 
 
@@ -28,7 +29,7 @@ def convert_frames_to_video(pathIn,pathOut,fps):
     out.release()
 
 def create_video():
-  for dir in os.listdir('/home/haov/class_action'):
+  for dir in tqdm(os.listdir('/home/haov/class_action')):
       pathIn= '/home/haov/class_action/{}/'.format(dir)
       pathOut = '/home/haov/action_rec/videos/{}.avi'.format(dir)
       fps = 1.0
@@ -36,28 +37,51 @@ def create_video():
 
 
 def train():
-  res_txt = np.array([])
-  for video in os.listdir('./videos'):
-    name = video.replace('.mp4','')
-    print(video)
+  res_txt = np.asarray([])
+  index = 0
+  for video in tqdm(os.listdir('./videos')):
+    index += 1
+    if index is 2:
+      break
+    name = video.replace('.avi','')
+    # print(video)
     # break
-    run = subprocess.run(f'python main.py --video {path}/videos/{video} --name {name}',shell = True)
+    run = subprocess.run(f'python3 main.py --video {path}/videos/{video} --name {name}',shell = True)
     print(run)
-    txt = np.genfromtxt(str(path) + '/out_txt/' + str(name)  + '.txt')
-    cl =  np.full((txt.shape[0],1), name)
-    txt = np.concatenate((txt,cl), axis = 1)
+
+    txt = np.array([])
+    print('--------------------------------')
+    with open(str(path) + '/out_txt/' + str(name)  + '.txt','r') as f:
+      lines = f.readlines()
+      for i in range(len(lines)):
+        lines[i] = lines[i].replace('\n','')
+        lines[i] = lines[i].split(' ')
+        lines[i] = lines[i][:36]
+        try:
+          lines[i].remove('')
+        except ValueError:
+          pass
+        lines[i] = np.array([float(x) for x in lines[i]])
+       
+
+      
+      lines = [x for x in lines if len(x) is not 0 ]
+      txt = np.stack(lines).astype(None)
+      
+      print(txt.shape)
+      cl =  np.full((txt.shape[0],1), float(name))
+      txt = np.concatenate((txt,cl), axis = 1)
+      if len(res_txt):
+        res_txt = np.concatenate((txt,res_txt), axis = 0)
+      else:
+        res_txt = txt
     # chua biet cach add ra sau cung`
-    res_txt.append(txt)
   np.savetxt(str(path) + '/out_txt/res.txt', res_txt, delimiter=',',fmt='%1.4e')
   convert_to_txt = pd.read_csv(str(path) + '/out_txt/res.txt')
-  convert_to_txt.to_csv (str(path) + '/training/train_csv_file/' + f'{name}.csv' , index=None)
+  convert_to_txt.to_csv (str(path) + '/Action/training/train_csv_file/' +'res.csv' , index=None)
 
-create_video()
+# create_video()
 train()
-<<<<<<< HEAD
-
-=======
->>>>>>> 285c01cfde1f1140084617884a0ace7e557962bf
 
 
   

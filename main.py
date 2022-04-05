@@ -14,7 +14,7 @@ args = parser.parse_args()
 
 # 导入相关模型
 estimator = load_pretrain_model('mobilenet_thin')
-action_classifier = load_action_premodel('/content/gdrive/MyDrive/Hao_AIC/Online-Realtime-Action-Recognition-based-on-OpenPose/AIC_framewise_recognition.h5')
+action_classifier = load_action_premodel('AIC_framewise_recognition.h5')
 
 # 参数初始化
 realtime_fps = '0.0000'
@@ -37,7 +37,7 @@ while cv.waitKey(1) < 0:
     if has_frame:
         fps_count += 1
         frame_count += 1
-        print(frame_count)
+        print(frame_count, args.name)
         # pose estimation
         humans = estimator.inference(show)
         # get pose info
@@ -52,7 +52,7 @@ while cv.waitKey(1) < 0:
             realtime_fps = fps_count / (time.time() - start_time)
             fps_count = 0  # 帧数清零
             start_time = time.time()
-        fps_label = 'FPS:{0:.2f}'.format(realtime_fps)
+        fps_label = 'FPS:{0:.2f}'.format(float(realtime_fps))
         cv.putText(show, fps_label, (width-160, 25), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
 
         # 显示检测到的人数

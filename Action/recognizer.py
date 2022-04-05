@@ -153,7 +153,7 @@ def framewise_recognize(pose, pretrained_model):
                 pred = np.argmax(pretrained_model.predict(joints_norm_single_person))
                 init_label = Actions(pred).name
                 # 显示动作类别
-                print(init_label)
+                # print(init_label)
                 cv.putText(frame, init_label, (xmin + 80, ymin - 45), cv.FONT_HERSHEY_SIMPLEX, 1, trk_clr, 3)
                 # 异常预警(under scene)
                 if init_label == 'fall_down':
