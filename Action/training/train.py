@@ -113,7 +113,7 @@ def plot_confusion_matrix(cm, classes,
 
 
 # load data
-raw_data = pd.read_csv('/content/res.csv', header=0)
+raw_data = pd.read_csv('/home/haov/action_rec/Action/training/train_csv_file/res.csv', header=0)
 dataset = raw_data.values
 # X = dataset[:, 0:36].astype(float)
 # Y = dataset[:, 36]
@@ -142,7 +142,7 @@ model.add(Dense(units=64, activation='relu'))
 model.add(BatchNormalization())
 model.add(Dense(units=16, activation='relu'))
 model.add(BatchNormalization())
-model.add(Dense(units=2, activation='softmax'))  # units = nums of classes
+model.add(Dense(units=18, activation='softmax'))  # units = nums of classes
 
 # training
 his = LossHistory()
