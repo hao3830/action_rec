@@ -38,11 +38,7 @@ def create_video():
 
 def train():
   res_txt = np.asarray([])
-  index = 0
   for video in tqdm(os.listdir('./videos')):
-    index += 1
-    if index is 2:
-      break
     name = video.replace('.avi','')
     # print(video)
     # break
@@ -80,7 +76,7 @@ def train():
   convert_to_txt = pd.read_csv(str(path) + '/out_txt/res.txt')
   convert_to_txt.to_csv (str(path) + '/Action/training/train_csv_file/' +'res.csv' , index=None)
 
-create_video()
+# create_video()
 train()
 
 
