@@ -137,6 +137,12 @@ X_train, X_test, Y_train, Y_test = train_test_split(X,dummy_Y, test_size=0.1, ra
 
 # build keras model
 model = Sequential()
+model.add(Dense(units=1024, activation='relu'))
+model.add(BatchNormalization())
+model.add(Dense(units=512, activation='relu'))
+model.add(BatchNormalization())
+model.add(Dense(units=256, activation='relu'))
+model.add(BatchNormalization())
 model.add(Dense(units=128, activation='relu'))
 model.add(BatchNormalization())
 model.add(Dense(units=64, activation='relu'))
