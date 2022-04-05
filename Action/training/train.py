@@ -141,7 +141,7 @@ model.add(Dense(units=128, activation='relu'))
 model.add(BatchNormalization())
 model.add(Dense(units=64, activation='relu'))
 model.add(BatchNormalization())
-model.add(Dense(units=32, activation='relu'))
+model.add(Dense(units=16, activation='relu'))
 model.add(BatchNormalization())
 model.add(Dense(units=18, activation='softmax'))  # units = nums of classes
 
