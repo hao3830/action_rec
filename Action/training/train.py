@@ -120,6 +120,7 @@ dataset = raw_data.values
 X = dataset[0:dataset.shape[0], 0:36].astype(float)  # 忽略run数据
 Y = dataset[0:dataset.shape[0], 36]
 Y = np.array([Y]).T
+
 # 将类别编码为数字
 # encoder = LabelEncoder()
 # encoder_Y = encoder.fit_transform(Y)
